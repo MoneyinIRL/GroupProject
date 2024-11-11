@@ -1,0 +1,48 @@
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 160px 24px; 
+  gap: 32px;
+  height: auto; 
+  width: 100vw;
+
+  background: #1E1E1E;
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+}
+
+.text-content .title, .text-content .subtitle {
+  width: 100%;
+  max-width: 700px;
+}
+
+.text-content .title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 120%;
+  text-align: center;
+  letter-spacing: -0.03em;
+  color: #F3F3F3;
+}
+
+.text-content .subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 120%;
+  text-align: center;
+  color: #F3F3F3;
+}
