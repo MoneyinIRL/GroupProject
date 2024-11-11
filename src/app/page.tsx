@@ -1,7 +1,12 @@
+"use client";
+
+
 import Header from './frontend/components/header';
 import LoginBar from './frontend/components/loginbar';
 import Movies from './frontend/components/movies';
+import { useState } from 'react';
 import './page.css';
+
 
 type movie = {
       id: number;
@@ -36,13 +41,38 @@ const MOVIES_INIT:movie[] = [
 
 
 export default function Home() {
+  const [moviesArray,setMoviesArray] = useState<movie[]>(MOVIES_INIT)
+  const addMovieHandler = (update:movie) =>{
+    console.log('At top component');
+    console.log(update);
+    setMoviesArray((prevMovies) => [
+    ...prevMovies,
+    {
+      ...update,
+    },
+
+
+
+
+    ]);
+    
+
+
+  }
 
   return (
     <div className="container">
        
        <LoginBar></LoginBar>
        <Header></Header>
+       
        <Movies movies = {MOVIES_INIT} />
+
+       
+      
+      
+       
+       
 
        
        
