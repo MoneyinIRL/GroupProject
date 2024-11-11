@@ -1,0 +1,19 @@
+.Splash {
+    display: flex; 
+    justify-content: center;
+    background-image: url("../frontend/images/sailboatBackground.png");
+    padding: 10%;
+}
+
+.headOne {
+    font-size: 300%;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+}
+
+.headTwo {
+    font-size: large;
+    align-content: center;
+}

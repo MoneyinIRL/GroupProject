@@ -6,6 +6,11 @@ import LoginBar from './frontend/components/loginbar';
 import Movies from './frontend/components/movies';
 import { useState } from 'react';
 import './page.css';
+import NavBar from './frontend/components/NavBar';
+import Splash from './frontend/components/Splash';
+import SearchBar from './frontend/components/SearchBar';
+import MovieList from './frontend/components/MovieList';
+import Footer from './frontend/components/Footer';
 
 
 type movie = {
@@ -60,22 +65,20 @@ export default function Home() {
 
   }
 
+  //ok don't hate me but I redid the unauthenticated view to make it look closer to what's on Figma
+  //all the original files are still in the ./frontend/ folder so we can have those in the authenticated view
   return (
     <div className="container">
        
-       <LoginBar></LoginBar>
-       <Header></Header>
+       <NavBar />
+       <Splash />
+       <SearchBar />
+       <MovieList />
+       
        
        <Movies movies = {MOVIES_INIT} />
 
-       
-      
-      
-       
-       
-
-       
-       
+       <Footer />
       
     </div>
   );

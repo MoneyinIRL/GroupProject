@@ -1,0 +1,26 @@
+.SearchBar {
+    background-color: #222235;
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+    color: #7f8290;
+}
+
+.searchInput {
+    color: #222235;
+    padding: 3px 400px 3px 15px;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.newButton {
+    background-color: #7f8290;
+    color: #222235;
+
+    font-size: 85%;
+    font-weight: bold;
+    
+    padding: 7px 15px 7px 15px;
+    border-radius: 20%;
+    margin:10px;
+}

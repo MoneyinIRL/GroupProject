@@ -1,0 +1,12 @@
+.MovieList {
+    background-color: #1e1e21;
+    padding: 15%;
+}
+
+.headOne {
+    font-size: 300%;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+}
