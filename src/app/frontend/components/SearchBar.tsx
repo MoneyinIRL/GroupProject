@@ -4,7 +4,7 @@ export default function SearchBar() {
     return (
     <div className={styles.SearchBar}>
         <div className={styles.searchGroup}>
-            <button disabled> <img src='../frontend/images/SearchIcon.png' alt='Search Items' /> </button>
+            <button disabled> <img src="../images/SearchIcon.png" alt='Search Items' /> </button>
             <input 
                 className={styles.searchInput}
                 name="Search Text" 
@@ -13,7 +13,7 @@ export default function SearchBar() {
             />
         </div>
         <div className={styles.searchGroup}>
-            <button disabled> <img src='../frontend/images/FilterIcon.png' alt='Filter Items'/> </button>
+            <button disabled> <img src="../images/FilterIcon.png" alt='Filter Items'/> </button>
             <button className={styles.newButton} disabled> Add New...</button>
         </div>
     </div>
