@@ -1,0 +1,11 @@
+.container {
+  display: block;
+  box-sizing: border-box;
+  flex-direction: column;  
+  justify-content: flex-start; 
+  align-items: stretch;  
+  width: 100vw;  
+  height: 100vh;  
+  margin: 0; 
+  padding: 0;  
+}

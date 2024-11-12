@@ -1,0 +1,45 @@
+.LogSignBackground {
+    display: flex; 
+    justify-content: center;
+    background-color: #212225;
+    color: #63DCFB;
+    padding: 10%;
+}
+
+.logInForm {
+    width: 320px;
+    height: 316px;
+    min-width: 320px;
+    top: -3327px;
+    left: -547px;
+    padding: var(--sds-size-space-600);
+    gap: var(--sds-size-space-600);
+    border-radius: var(--sds-size-radius-200);
+    border: var(--sds-size-stroke-border);
+}
+
+.signUpForm {
+    width: 350px;
+    height: 276px;
+    min-width: 320px;
+    top: -3801px;
+    left: -361px;
+    padding: var(--sds-size-space-600);
+    gap: var(--sds-size-space-600);
+    border-radius: var(--sds-size-radius-200);
+    border: var(--sds-size-stroke-border);
+    opacity: 0px;
+}
+
+.headOne {
+    font-size: 200%;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+}
+
+.headTwo {
+    font-size: large;
+    align-content: center;
+}
