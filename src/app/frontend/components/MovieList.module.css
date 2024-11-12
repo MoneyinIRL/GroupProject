@@ -1,12 +1,113 @@
-.MovieList {
-    background-color: #1e1e21;
-    padding: 15%;
+/* Movie Card Container */
+.movieList {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
 }
 
-.headOne {
-    font-size: 300%;
-    font-weight: bold;
-
+/* Movie Card */
+.movieCard {
+    width: 440px;
+    height: 280px;
+    background-color: #3D3E47;
+    border: 1px solid #93BCC7;
+    border-radius: 8px;
+    padding: 20px;
     display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+}
+
+/* Image Placeholder */
+.imagePlaceholder {
+    width: 160px;
+    height: 224px;
+    background: #E3E3E3;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    color: #333;
+}
+
+/* Movie Title */
+.title {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 120%;
+    color: #D9D9D9;
+    margin: 0;
+}
+
+/* Synopsis Text */
+.synopsis {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: #D2D2D2;
+    margin-top: 8px;
+}
+
+/* Services Icons */
+.services {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.serviceIcon {
+    width: 25px;
+    height: 25px;
+    opacity: 0.4;
+    background: #B2B3C8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+}
+
+/* Genre Tags */
+.genres {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.genreTag {
+    width: 65px;
+    height: 20px;
+    background-color: #D3DFE4;
+    border-radius: 3px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: #1B112F;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Edit Button */
+.editButton {
+    background-color: #5163B1;
+    color: #F3F3F3;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    margin-top: auto;
 }
