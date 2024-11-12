@@ -1,7 +1,7 @@
 .Splash {
     display: flex; 
     justify-content: center;
-    background-image: url("../frontend/images/sailboatBackground.png");
+    background-image: url("../images/sailboatBackground.png");
     padding: 10%;
 }
 
