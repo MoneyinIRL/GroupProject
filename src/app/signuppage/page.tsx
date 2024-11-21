@@ -12,7 +12,7 @@ export default function SignUpPage() {
     <div className="container">
        
        <NavBar />
-       <SignUp />
+       <SignUp  />
        <Footer />
       
     </div>

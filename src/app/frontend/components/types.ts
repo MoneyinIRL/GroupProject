@@ -16,3 +16,9 @@ export type movieListProps = {
     movies: movie[];
 
 }
+
+export type user = {
+    username: string;
+    password: string;
+    email: string;
+}
