@@ -1,3 +1,4 @@
+import Card from './card';
 import styles from './LogInAndSignUp.module.css';
 import { ChangeEvent, useState, FormEvent} from 'react';
 
@@ -5,9 +6,11 @@ import { ChangeEvent, useState, FormEvent} from 'react';
 
 
 export default function SignUp() {
-    const [enteredUsername,setEnteredUsername] = useState<string>(' ');
-    const [enteredPassword,setEnteredPassword] = useState<string>(' ');
-    const [enteredEmail,setEnteredEmail] = useState<string>(' ');
+    const [enteredUsername,setEnteredUsername] = useState<string>('');
+    const [enteredPassword,setEnteredPassword] = useState<string>('');
+    const [enteredEmail,setEnteredEmail] = useState<string>('');
+    const [enteredVerifiedPassword,setEnteredVerifiedPassword] = useState<string>('');
+    const [verifyPassword,setverifyPassword] = useState<boolean>(true);
 
     const usernameChangeHandler = (event: ChangeEvent<HTMLInputElement> ) => {
         setEnteredUsername(event.target.value)
@@ -20,8 +23,16 @@ export default function SignUp() {
         setEnteredEmail(event.target.value)
     }
 
+    const verifiedPasswordChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setEnteredVerifiedPassword(event.target.value)
+    }
+
     const  submitHandler = async (event: FormEvent) => {
         event.preventDefault();
+        if (enteredPassword!=enteredVerifiedPassword){
+            setverifyPassword(false);
+            return false;
+        }
         const userUpdate = {
             username:enteredUsername,
             password:enteredPassword,
@@ -48,10 +59,11 @@ export default function SignUp() {
             console.error("User could not be saved.",error);
         }
         
-
-        setEnteredUsername(' ')
-        setEnteredPassword(' ')
-        setEnteredEmail(' ')
+        setverifyPassword(true)
+        setEnteredUsername('')
+        setEnteredPassword('')
+        setEnteredEmail('')
+        setEnteredVerifiedPassword('')
         
 
     }
@@ -59,42 +71,64 @@ export default function SignUp() {
 
     return (
         <div className={styles.LogSignBackground}>
+        <Card className={styles.signUpCard}>
         <main>
-            <div className={styles.masthead}>
-                <h1 className={styles.headOne}> Sign Up: </h1>
+            
+                <h1 className={styles.signUpTitle}> Sign Up </h1>
                 <form className={styles.signUpForm} onSubmit = {submitHandler}>
-                    <label>Username:</label>
+                    <div className={styles.signUpBox}>
+                    <label className={styles.signUpSubTitle}>Username</label>
                     <input 
                     id="name" 
                     type="text" 
-                    placeholder="Enter your username"
+                    
                     value = {enteredUsername}
                     onChange = {usernameChangeHandler}
-                    
+                    className={styles.input}
                     />
-                    <label>Email:</label>
+                    </div>
+                    <div className = {styles.signUpBox}>
+                    <label className={styles.signUpSubTitle}>Email</label>
                     <input 
                     id="email" 
                     type="email" 
-                    placeholder="Enter your E-Mail"
+                   
                     value = {enteredEmail}
                     onChange = {emailChangeHandler}
+                    className = {styles.input}
                     />
-                    <label>Password:</label>
+                    </div>
+                    <div className = {styles.signUpBox}>
+                    <label className={styles.signUpSubTitle}>Password</label>
                     <input 
                     id="password" 
                     type="password" 
-                    placeholder="Enter your password"
+                    
                     value = {enteredPassword}
                     onChange = {passwordChangeHandler}
+                    className = {styles.input}
                     
                     />
-                    <label>Verify Password:</label>
-                    <input id="verifypassword" type="password" placeholder="Repeat your password, please"/>
-                    <button type="submit">Sign Up!</button>
+                    </div>
+                    <div className = {styles.signUpBox}>
+                    <label className={styles.signUpSubTitle}>Verify Password</label>
+                    <input 
+                    id="verifypassword" 
+                    type="password" 
+                    value =  {enteredVerifiedPassword}
+                    className = {styles.input}
+                    onChange = {verifiedPasswordChangeHandler}
+                    />
+                    </div>
+                    <div className = {styles.register}>
+                    
+                    <button type="submit" className={styles.submitButton}>Register</button>
+                    
+                    </div>
                 </form>
-            </div>
+            
         </main>
+        </Card>
       </div>
     )
 }
