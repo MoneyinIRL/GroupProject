@@ -4,6 +4,7 @@ import styles from './SearchBar.module.css';
 import { searchMovies } from '../../api/tmdb'; // check this path
 import searchIcon from "../images/SearchIcon.png";
 import filterIcon from "../images/FilterIcon.png";
+import { searchMovies } from '../../api/tmdb'; 
 
 export default function SearchBar() {
     const [isModalOpen, setIsModalOpen] = useState(false);
