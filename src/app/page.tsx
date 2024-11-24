@@ -70,7 +70,7 @@ export default function Home() {
   return (
     <div className="container">
        
-       <div style={{ height: '600px', overflow: 'scroll' }}>
+       <div style={{ height: '100%', width: '100%', overflow: 'scroll' }}>
        <NavBar />
         <Splash />
         <SearchBar />
