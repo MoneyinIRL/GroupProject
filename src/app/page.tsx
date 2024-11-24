@@ -66,18 +66,17 @@ export default function Home() {
 
   //ok don't hate me but I redid the unauthenticated view to make it look closer to what's on Figma
   //all the original files are still in the ./frontend/ folder so we can have those in the authenticated view
+  //  <Movies movies = {MOVIES_INIT} />
   return (
     <div className="container">
        
+       <div style={{ height: '600px', overflow: 'scroll' }}>
        <NavBar />
-       <Splash />
-       <SearchBar />
-       <MovieList />
-       
-       
-       <Movies movies = {MOVIES_INIT} />
-
-       <Footer />
+        <Splash />
+        <SearchBar />
+        <MovieList />
+        <Footer />
+       </div>
       
     </div>
   );

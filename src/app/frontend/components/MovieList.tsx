@@ -51,7 +51,7 @@ export default function MovieList() {
                         <div className={styles.services}>
                             {movie.services.map((service, index) => (
                                 <div key={index} className={styles.serviceIcon}>
-                                    <img src={service as unknown as string} alt="Service Icon" style={{ width: '100%' }} />
+                                    <img src={service.src as unknown as string} alt="Service Icon" style={{ width: '100%' }} />
                                 </div>
                             ))}
                         </div>

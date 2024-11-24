@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import AddItemModal from './AddItemModal';
 import styles from './SearchBar.module.css';
 import { searchMovies } from '../../api/tmdb'; // check this path
+import searchIcon from "../images/SearchIcon.png";
+import filterIcon from "../images/FilterIcon.png";
 
 export default function SearchBar() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +33,7 @@ export default function SearchBar() {
         <div className={styles.SearchBar}>
             <div className={styles.searchGroup}>
                 <button onClick={handleSearchClick}>
-                    <img src="../images/SearchIcon.png" alt="Search Items" />
+                    <img src={searchIcon.src} alt="Search Items" />
                 </button>
                 <input
                     className={styles.searchInput}
@@ -62,7 +64,7 @@ export default function SearchBar() {
             </div>
             <div className={styles.searchGroup}>
                 <button>
-                    <img src="../images/FilterIcon.png" alt="Filter Items" />
+                    <img src={filterIcon.src} alt="Filter Items" />
                 </button>
                 <button className={styles.newButton} onClick={openModal}>
                     Add New...
