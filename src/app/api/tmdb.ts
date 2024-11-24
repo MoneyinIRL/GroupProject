@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-// Directly assign the API key
+// Change to .env file
 const TMDB_API_KEY = '1b82ee7efd9692cca0fcf64a2c0e2459';
 
 if (!TMDB_API_KEY) {
     throw new Error('TMDB API key is missing');
 }
 
-// Function to search for movies
+// Function to search for movies using the TMDB API
 export const searchMovies = async (query: string) => {
   if (!query) return [];
   try {
