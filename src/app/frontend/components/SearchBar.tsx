@@ -1,28 +1,67 @@
 import React, { useState } from 'react';
 import AddItemModal from './AddItemModal';
 import styles from './SearchBar.module.css';
+import { searchMovies } from '../../api/tmdb'; // check this path
 
 export default function SearchBar() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [query, setQuery] = useState('');
+    const [results, setResults] = useState<{ id: number; title: string; release_date: string; poster_path: string }[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(e.target.value);
+    };
+
+    const handleSearchClick = async () => {
+        if (query.trim()) {
+            setIsLoading(true);
+            const movies = await searchMovies(query.trim());
+            setResults(movies.slice(0, 3)); // Limit to top 3 results
+            setIsLoading(false);
+        } else {
+            setResults([]);
+        }
+    };
+
     return (
         <div className={styles.SearchBar}>
             <div className={styles.searchGroup}>
-                <button disabled>
+                <button onClick={handleSearchClick}>
                     <img src="../images/SearchIcon.png" alt="Search Items" />
                 </button>
                 <input
                     className={styles.searchInput}
                     name="Search Text"
-                    placeholder="Search..."
-                    disabled
+                    placeholder="Search for a movie..."
+                    value={query}
+                    onChange={handleSearchChange}
                 />
             </div>
+            <div className={styles.resultsContainer}>
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : (
+                    results.map((movie) => (
+                        <div key={movie.id} className={styles.resultItem}>
+                            <img
+                                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                                alt={movie.title}
+                                className={styles.moviePoster}
+                            />
+                            <div className={styles.movieDetails}>
+                                <h4>{movie.title}</h4>
+                                <p>{movie.release_date}</p>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
             <div className={styles.searchGroup}>
-                <button disabled>
+                <button>
                     <img src="../images/FilterIcon.png" alt="Filter Items" />
                 </button>
                 <button className={styles.newButton} onClick={openModal}>

@@ -16,11 +16,43 @@
 .newButton {
     background-color: #7f8290;
     color: #222235;
-
     font-size: 85%;
     font-weight: bold;
-    
     padding: 7px 15px 7px 15px;
     border-radius: 20%;
-    margin:10px;
+    margin: 10px;
+}
+
+.resultsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.resultItem {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.resultItem:hover {
+    background-color: #444;
+}
+
+.moviePoster {
+    width: 50px; /* Adjust  size  */
+    height: auto;
+    margin-right: 10px;
+}
+
+.movieDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
 }
