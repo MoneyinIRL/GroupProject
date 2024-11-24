@@ -4,7 +4,7 @@ import { useState } from 'react';
 import './page.css';
 import NavBar from '../frontend/components/NavBar';
 import LogIn from '../frontend/components/LogIn';
-import Footer from '../frontend/components/Footer';
+import FootingA from '../frontend/Footings';
 
 export default function LogInPage() {
 
@@ -12,8 +12,8 @@ export default function LogInPage() {
     <div className="container">
        
        <NavBar />
+       <FootingA />
        <LogIn  />
-       <Footer />
       
     </div>
   );

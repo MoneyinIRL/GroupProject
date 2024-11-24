@@ -6,19 +6,7 @@
     padding: 10%;
 }
 
-.logInForm {
-    width: 320px;
-    height: 316px;
-    min-width: 320px;
-    top: -3327px;
-    left: -547px;
-    padding: var(--sds-size-space-600);
-    gap: var(--sds-size-space-600);
-    border-radius: var(--sds-size-radius-200);
-    border: var(--sds-size-stroke-border);
-}
-
-.signUpForm {
+.inputForm {
     width: 350px;
     height: 276px;
     min-width: 320px;
@@ -44,8 +32,24 @@
     align-content: center;
 }
 
-.signUpCard {
+.loginCard {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    gap: 24px;
 
+    position: relative;
+    width: 400px;
+    min-width: 320px;
+    height: 335px;
+
+    background: #0A0A0C;
+    border-radius: 8px;
+}
+
+.signupCard {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -56,12 +60,10 @@
     position: relative;
     width: 400px;
     min-width: 320px;
-    height: 400px;
+    height: 450px;
 
-    background: #FFFFFF;
-    border: 1px solid #D9D9D9;
+    background: #0A0A0C;
     border-radius: 8px;
-
 }
 
 .signUpBox {
@@ -83,20 +85,23 @@
 }
 
 
-.signUpTitle {
+.headTitle {
     font-size: 150%;
-    color:black;
+    color:whitesmoke;
     font-weight: bold;
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
-.signUpSubTitle {
-    font-size: 90%;
-    color:black;
-    font-weight: bold;
+.subTitle {
+    font-style: italic;
+    color:whitesmoke;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: -2px;
+    margin-bottom: -4px;
 
 }
 
@@ -105,7 +110,9 @@
     padding: 0px;
     border-radius: 8px;
     transition: border-color 0.3s ease; 
-    width: 275px; 
+    width: 350px;
+    height: 30px;
+    margin-bottom: -5px;
 
 }
 
@@ -116,22 +123,22 @@
     align-items: center;
     padding: 12px;
     gap: 8px;
+    margin-top: 25px;
+    font-weight: bolder;
     
     width: 350px;
     height: 40px;
-    background: #2C2C2C;
+    background: #6779CC;
     border: 1px solid #2C2C2C;
     border-radius: 8px;
     flex: none;  
     order: 1;
     flex-grow: 1; 
     color:aliceblue;
-    
+    transition: 0.3s;
 }
 
-
-
-
-
-
-
+.submitButton:hover {
+    background-color: aliceblue;
+    color: #6779CC;
+}

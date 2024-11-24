@@ -2,7 +2,6 @@
 
 
 import Header from './frontend/components/header';
-import LoginBar from './frontend/components/loginbar';
 import Movies from './frontend/components/movies';
 import { useState } from 'react';
 import './page.css';

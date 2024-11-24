@@ -1,6 +1,7 @@
 import styles from './LogInAndSignUp.module.css';
 import { ChangeEvent, useState, FormEvent} from 'react';
 import { doCredentialLogin } from '@/libs/credential';
+import Card from './card';
 
 export default function LogIn() {
     const [enteredUsername,setenteredUsername] = useState<string>('')
@@ -41,16 +42,23 @@ export default function LogIn() {
     return (
         <div className={styles.LogSignBackground}>
         <main>
-            <div className={styles.masthead}>
-                <h1 className={styles.headOne}> Log In: </h1>
-                <form className={styles.logInForm} onSubmit = {submitHandler}>
-                    <label>Username:</label>
-                    <input id="name" type="text" placeholder="Enter your username" onChange = {usernameChangeHandler} value={enteredUsername}/>
-                    <label>Password:</label>
-                    <input id="password" type="password" placeholder="Enter your password" onChange = {passwordChangeHandler} value={enteredPassword}/>
-                    <button type="submit">Log In!</button>
+            <Card className={styles.loginCard}>
+                <h1 className={styles.headTitle}> Log In to Sailboat </h1>
+                <form className={styles.inputForm} onSubmit = {submitHandler}>
+                    
+                    <div className = {styles.signUpBox}>
+                        <label className={styles.subTitle}>Username</label>
+                        <input className={styles.input} id="name" type="text" placeholder="Enter your username" onChange = {usernameChangeHandler} value={enteredUsername}/>
+                    </div>
+                    
+                    <div className = {styles.signUpBox}>
+                        <label className={styles.subTitle}>Password</label>
+                        <input className={styles.input} id="password" type="password" placeholder="Enter your password" onChange = {passwordChangeHandler} value={enteredPassword}/>
+                    </div>         
+
+                    <button className={styles.submitButton} type="submit">Log In</button>
                 </form>
-            </div>
+            </Card>
         </main>
       </div>
     )

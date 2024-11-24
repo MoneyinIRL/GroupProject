@@ -71,13 +71,13 @@ export default function SignUp() {
 
     return (
         <div className={styles.LogSignBackground}>
-        <Card className={styles.signUpCard}>
+        <Card className={styles.signupCard}>
         <main>
             
-                <h1 className={styles.signUpTitle}> Sign Up </h1>
-                <form className={styles.signUpForm} onSubmit = {submitHandler}>
+                <h1 className={styles.headTitle}> Create a Sailboat Account </h1>
+                <form className={styles.inputForm} onSubmit = {submitHandler}>
                     <div className={styles.signUpBox}>
-                    <label className={styles.signUpSubTitle}>Username</label>
+                    <label className={styles.subTitle}>Username</label>
                     <input 
                     id="name" 
                     type="text" 
@@ -88,7 +88,7 @@ export default function SignUp() {
                     />
                     </div>
                     <div className = {styles.signUpBox}>
-                    <label className={styles.signUpSubTitle}>Email</label>
+                    <label className={styles.subTitle}>Email</label>
                     <input 
                     id="email" 
                     type="email" 
@@ -99,7 +99,7 @@ export default function SignUp() {
                     />
                     </div>
                     <div className = {styles.signUpBox}>
-                    <label className={styles.signUpSubTitle}>Password</label>
+                    <label className={styles.subTitle}>Password</label>
                     <input 
                     id="password" 
                     type="password" 
@@ -111,7 +111,7 @@ export default function SignUp() {
                     />
                     </div>
                     <div className = {styles.signUpBox}>
-                    <label className={styles.signUpSubTitle}>Verify Password</label>
+                    <label className={styles.subTitle}>Verify Password</label>
                     <input 
                     id="verifypassword" 
                     type="password" 
