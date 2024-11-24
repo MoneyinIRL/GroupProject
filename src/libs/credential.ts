@@ -1,7 +1,7 @@
 import { signIn,signOut } from "next-auth/react";
 
 export async function doLogout() {
-    await signOut({ redirectTo:"/"})
+    await signOut({ redirectTo:"/"});
 }
 
 export async function doCredentialLogin(formdata: FormData): Promise<any>{
@@ -11,11 +11,15 @@ export async function doCredentialLogin(formdata: FormData): Promise<any>{
     if (!username || !password) {
         throw new Error("Username or password is missing");
     }
+    console.log("Username:",username)
+    console.log("Password:",password)
     try {
         const response = await signIn("credentials",{
             redirect: false,
             username,
             password,
+            
+            
 
         });
         console.log(response)

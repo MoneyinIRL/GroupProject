@@ -22,3 +22,7 @@ export type user = {
     password: string;
     email: string;
 }
+
+export type users = {
+    users:user[]
+}
