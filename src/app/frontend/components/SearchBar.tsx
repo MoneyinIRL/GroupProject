@@ -59,7 +59,7 @@ export default function SearchBar({ onMovieSelect }) {
     return (
         <div className={styles.SearchBar}>
             <div className={styles.searchGroup}>
-                <button onClick={handleSearchClick}>
+                <button className={styles.searchButton} onClick={handleSearchClick}>
                     <img src={searchIcon.src} alt="Search Items" />
                 </button>
                 <input
@@ -69,6 +69,9 @@ export default function SearchBar({ onMovieSelect }) {
                     value={query}
                     onChange={handleSearchChange}
                 />
+                <button className={styles.filterButton}>
+                    <img src={filterIcon.src} alt="Filter Items" />
+                </button>
             </div>
             <div className={styles.resultsContainer}>
                 {isLoading ? (
@@ -88,11 +91,6 @@ export default function SearchBar({ onMovieSelect }) {
                         </div>
                     ))
                 )}
-            </div>
-            <div className={styles.searchGroup}>
-                <button>
-                    <img src={filterIcon.src} alt="Filter Items" />
-                </button>
             </div>
         </div>
     );

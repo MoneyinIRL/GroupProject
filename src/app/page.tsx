@@ -61,16 +61,17 @@ export default function Home() {
     };
 
     return (
-        <div className="container">
-            <div style={{ height: '100%', width: '100%', overflow: 'scroll' }}>
-            <NavBar />
-            <Splash />
-            <SearchBar onMovieSelect={handleMovieSelect} />
-            <MovieList 
-                movies={movies} 
-                onDeleteMovie={handleDeleteMovie}
-            />
-            <Footer />
+        <div className="container-full">
+            <div className="content-wrapper">
+                <NavBar />
+                <Splash />
+                <SearchBar onMovieSelect={handleMovieSelect} />
+                <MovieList 
+                    movies={movies} 
+                    onDeleteMovie={handleDeleteMovie}
+                />
+                <Footer />
+            </div>
         </div>
     );
 }
