@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import AddItemModal from './AddItemModal';
 import styles from './SearchBar.module.css';
-import { searchMovies } from '../../api/tmdb'; // check this path
+import { searchMovies, getMovieDetails } from '../../api/tmdb';
 import searchIcon from "../images/SearchIcon.png";
 import filterIcon from "../images/FilterIcon.png";
-import { searchMovies } from '../../api/tmdb'; 
 
-export default function SearchBar() {
+export default function SearchBar({ onMovieSelect }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [query, setQuery] = useState('');
-    const [results, setResults] = useState<{ id: number; title: string; release_date: string; poster_path: string }[]>([]);
+    const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearchChange = (e) => {
         setQuery(e.target.value);
     };
 
@@ -27,6 +26,33 @@ export default function SearchBar() {
             setIsLoading(false);
         } else {
             setResults([]);
+        }
+    };
+
+    const handleResultClick = async (movieId) => {
+        const movieDetails = await getMovieDetails(movieId);
+        
+        // Save to database
+        try {
+            const response = await fetch('/api/saveMovie', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    movieId: movieDetails.id,
+                    title: movieDetails.title,
+                    overview: movieDetails.overview,
+                    poster_path: movieDetails.poster_path,
+                    genres: movieDetails.genres.map(g => g.name)
+                })
+            });
+
+            if (!response.ok) throw new Error('Failed to save movie');
+            
+            onMovieSelect(movieDetails);
+        } catch (error) {
+            console.error('Error saving movie:', error);
         }
     };
 
@@ -49,7 +75,7 @@ export default function SearchBar() {
                     <p>Loading...</p>
                 ) : (
                     results.map((movie) => (
-                        <div key={movie.id} className={styles.resultItem}>
+                        <div key={movie.id} className={styles.resultItem} onClick={() => handleResultClick(movie.id)}>
                             <img
                                 src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                                 alt={movie.title}
@@ -67,11 +93,7 @@ export default function SearchBar() {
                 <button>
                     <img src={filterIcon.src} alt="Filter Items" />
                 </button>
-                <button className={styles.newButton} onClick={openModal}>
-                    Add New...
-                </button>
             </div>
-            <AddItemModal isOpen={isModalOpen} onClose={closeModal} />
         </div>
     );
 }

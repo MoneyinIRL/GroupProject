@@ -26,3 +26,20 @@ export const searchMovies = async (query: string) => {
     return [];
   }
 };
+
+export const getMovieDetails = async (movieId: number) => {
+    try {
+        const response = await axios.get(
+            `https://api.themoviedb.org/3/movie/${movieId}`,
+            {
+                params: {
+                    api_key: TMDB_API_KEY,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching movie details from TMDB:', error);
+        return null;
+    }
+};
