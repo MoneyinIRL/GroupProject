@@ -50,7 +50,9 @@ export default function SearchBar({ onMovieSelect }) {
 
             if (!response.ok) throw new Error('Failed to save movie');
             
-            onMovieSelect(movieDetails);
+            const data = await response.json();
+            // Pass the saved movie data to the parent
+            onMovieSelect(data.movie); 
         } catch (error) {
             console.error('Error saving movie:', error);
         }

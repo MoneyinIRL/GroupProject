@@ -7,7 +7,6 @@ if (!TMDB_API_KEY) {
     throw new Error('TMDB API key is missing');
 }
 
-// Function to search for movies using the TMDB API
 export const searchMovies = async (query: string) => {
   if (!query) return [];
   try {

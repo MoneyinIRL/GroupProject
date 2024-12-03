@@ -1,4 +1,4 @@
-/* Movie Card Container */
+
 .movieList {
     display: flex;
     gap: 20px;
@@ -10,7 +10,7 @@
     min-height: 0;
 }
 
-/* Movie Card */
+
 .movieCard {
     width: 440px;
     height: 280px;
@@ -24,7 +24,7 @@
     position: relative;
 }
 
-/* Image Placeholder */
+
 .imagePlaceholder {
     width: 160px;
     height: 224px;
@@ -36,7 +36,7 @@
     color: #333;
 }
 
-/* Movie Title */
+
 .title {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -47,7 +47,7 @@
     margin: 0;
 }
 
-/* Synopsis Text */
+
 .synopsis {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -58,7 +58,7 @@
     margin-top: 8px;
 }
 
-/* Services Icons */
+
 .services {
     display: flex;
     gap: 10px;
@@ -76,7 +76,7 @@
     border-radius: 3px;
 }
 
-/* Genre Tags */
+
 .genres {
     display: flex;
     gap: 10px;
@@ -100,7 +100,7 @@
     justify-content: center;
 }
 
-/* Edit Button */
+
 .editButton {
     background-color: #5163B1;
     color: #F3F3F3;

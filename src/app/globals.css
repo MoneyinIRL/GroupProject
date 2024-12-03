@@ -31,18 +31,18 @@ body {
   height: 100%;
   width: 100%;
   overflow-y: auto;
-  overflow-x: hidden; /* Ensure horizontal scrolling is not enabled */
+  overflow-x: hidden; 
 }
 
 .container-full {
   min-height: 100vh;
-  width: 100%; /* Adjust the width to 100% */
+  width: 100%; 
   display: flex;
   flex-direction: column;
-  transform: none; /* Remove scaling */
+  transform: none; 
   transform-origin: top left;
-  height: auto; /* Adjust the height */
-  overflow: hidden; /* Hide any overflow */
+  height: auto; 
+  overflow: hidden;
 }
 
 .content-wrapper {
@@ -51,7 +51,7 @@ body {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  overflow-y: auto; /* Add this to enable scrolling */
+  overflow-y: auto; 
 }
 
 html, body {
@@ -59,18 +59,16 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: auto; /* Enable scrolling */
+  overflow: auto; 
 }
 
-/* Adjust MovieList scaling */
 .movieList {
-  transform: scale(0.9); /* Zoom out cards slightly */
+  transform: scale(0.9); 
   transform-origin: center top;
-  gap: 2.5rem; /* Increase gap between cards */
+  gap: 2.5rem;
   padding: 2rem;
 }
 
-/* Adjust any overflow */
 .movieCard {
   min-width: 440px;
   margin: 0 auto;

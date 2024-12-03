@@ -1,6 +1,5 @@
 "use client";
 
-//ok no judgement but what's with all the newlines before close brackets?
 
 import { useState } from 'react';
 import './page.css';

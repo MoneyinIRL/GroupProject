@@ -1,54 +1,74 @@
-import { authConfig } from "./auth.config";
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import connectMongoDB from "./libs/mongodb";
-import bcrypt from 'bcrypt';
-import { User } from "@/models/userSchema";
-import { user } from "@/app/frontend/components/types";
-import { users } from "@/app/frontend/components/types";
+import NextAuth from 'next-auth'
+import { authConfig } from './auth.config'
+import Credentials from 'next-auth/providers/credentials'
+import { z } from 'zod'
+import bcrypt from 'bcrypt'
+import { User } from '@/models/userSchema'
+import connectMongoDB from '@/libs/mongodb'
 
-export const { 
-  handlers: { GET, POST }, 
-  auth, 
-  signIn, 
-  signOut 
-} = NextAuth({
+const handler = NextAuth({
   ...authConfig,
   providers: [
-    CredentialsProvider({
-      credentials: {
-        username: {},
-        password: {},
-      },
+    Credentials({
       async authorize(credentials) {
-        
-        if (!credentials) return null;
         try {
-          const response = await connectMongoDB();
-          console.log(response)
-          const user = await User.findOne({ username: credentials.username }).lean<user>();
-          console.log(user)
-          if (user) {
-            
-            const isMatch = await bcrypt.compare( credentials.password as string,user.password );
-            
-            if (isMatch) {
-              console.log("Matched")
-              return user;
-            }
-             else {
-              console.log("Username or Password not correct");
-              return null;
-            }
-          } else {
-            console.log("User not found");
-            return null;
+          if (!credentials?.username || !credentials?.password) {
+            throw new Error('Missing credentials')
           }
-        } catch (error: any) {
-          console.log("An error occurred: ", error);
-          return null;
+
+          await connectMongoDB()
+          
+          const user = await User.findOne({ 
+            username: credentials.username 
+          })
+
+          if (!user) {
+            throw new Error('User not found')
+          }
+
+          const passwordsMatch = await bcrypt.compare(
+            credentials.password,
+            user.password
+          )
+
+          if (!passwordsMatch) {
+            throw new Error('Invalid password')
+          }
+
+          return {
+            id: user._id.toString(),
+            username: user.username,
+            email: user.email
+          }
+        } catch (error) {
+          console.error('Auth error:', error)
+          return null
         }
       }
-    }),
-  ]
-});
+    })
+  ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+        token.username = user.username
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.id = token.id
+        session.user.username = token.username
+      }
+      return session
+    }
+  },
+  pages: {
+    signIn: '/loginpage',
+    error: '/loginpage'
+  }
+})
+
+export const { auth, signIn, signOut } = handler
+export const GET = handler.handlers.GET
+export const POST = handler.handlers.POST

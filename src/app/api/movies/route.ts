@@ -1,19 +1,39 @@
-import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/auth";
+import { NextResponse } from "next/server";
 import connectMongoDB from "@/libs/mongodb";
 import { Movie } from "@/models/movieSchema";
 
-export async function POST(request: NextRequest) {
+export async function GET() {
     try {
         await connectMongoDB();
-        
-        const body = await request.json();
-        console.log("Received movie data:", body);
-
-        const movie = await Movie.create(body);
-        console.log("Created movie:", movie);
-
+        const movies = await Movie.find();
+        return NextResponse.json(movies);
+    } catch (error) {
+        console.error("Error fetching movies:", error);
         return NextResponse.json(
-            { message: "Movie saved successfully", movie },
+            { message: "Error fetching movies", error },
+            { status: 500 }
+        );
+    }
+}
+
+export async function POST(request: Request) {
+    try {
+        const session = await auth();
+        if (!session) {
+            return NextResponse.json(
+                { message: "Unauthorized" },
+                { status: 401 }
+            );
+        }
+
+        await connectMongoDB();
+        const movieData = await request.json();
+        
+        const movie = await Movie.create(movieData);
+        
+        return NextResponse.json(
+            { message: "Movie created", movie },
             { status: 201 }
         );
     } catch (error) {

@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+'use client'
+
+import React from 'react';
+import { useSession } from 'next-auth/react';
 import styles from './MovieList.module.css';
 import netflixIcon from '/src/app/frontend/images/netflix-icon.png';
 import huluIcon from '/src/app/frontend/images/hulu-icon.png';
@@ -24,20 +27,19 @@ const defaultMovies = [
             { name: 'Hulu', icon: huluIcon },
             { name: 'Prime', icon: primeIcon }
         ],
-        genres: ['Action', 'Thriller', 'Comedy'],
-        synopsis: 'Placeholder Body Text, short synopsis of show or movie.',
+        genres: ['Drama', 'Romance', 'Comedy'],
+        synopsis: 'Another placeholder synopsis for this amazing movie.',
     },
     {
         id: 3,
         title: 'Title of Movie 3',
         services: [
             { name: 'Netflix', icon: netflixIcon },
-            { name: 'Hulu', icon: huluIcon },
             { name: 'Prime', icon: primeIcon }
         ],
-        genres: ['Action', 'Thriller', 'Comedy'],
-        synopsis: 'Placeholder Body Text, short synopsis of show or movie.',
-    },
+        genres: ['Sci-Fi', 'Adventure', 'Action'],
+        synopsis: 'One more placeholder synopsis for your viewing pleasure.',
+    }
 ];
 
 interface MovieListProps {
@@ -46,35 +48,30 @@ interface MovieListProps {
 }
 
 export default function MovieList({ movies, onDeleteMovie }: MovieListProps) {
-    const [displayMovies, setDisplayMovies] = useState(defaultMovies);
+    const { data: session } = useSession();
+    
+    // Show user's movies if logged in and have movies, otherwise show defaults
+    const displayMovies = session && movies.length > 0 ? movies : defaultMovies;
 
-    useEffect(() => {
-        // Update display movies when movies prop changes
-        const updatedMovies = defaultMovies.map((defaultMovie, index) => {
-            return movies[index] || defaultMovie;
-        });
-        setDisplayMovies(updatedMovies);
-    }, [movies]);
-
-    const handleDelete = async (movieId: number, index: number) => {
+    const handleDelete = async (movieId: string) => {
+        if (!session) return;
+        
         try {
+            
             const response = await fetch(`/api/movies/${movieId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
             });
 
             if (!response.ok) {
                 throw new Error('Failed to delete movie');
             }
 
-            // Update local state first
-            setDisplayMovies(prev => {
-                const updated = [...prev];
-                updated[index] = defaultMovies[index];
-                return updated;
-            });
-
-            // Notify parent component
-            onDeleteMovie(movieId.toString());
+            
+            onDeleteMovie(movieId);
         } catch (error) {
             console.error('Error deleting movie:', error);
         }
@@ -83,11 +80,11 @@ export default function MovieList({ movies, onDeleteMovie }: MovieListProps) {
     return (
         <div className={styles.movieList}>
             {displayMovies.map((movie, index) => (
-                <div key={`movie-${index}`} className={styles.movieCard}>
-                    {movie.id !== defaultMovies[index].id && (
+                <div key={movie._id || `default-${index}`} className={styles.movieCard}>
+                    {session && movie._id && (
                         <button 
                             className={styles.deleteButton}
-                            onClick={() => handleDelete(movie.id, index)}
+                            onClick={() => handleDelete(movie._id)}
                         >
                             ✕
                         </button>
@@ -106,9 +103,9 @@ export default function MovieList({ movies, onDeleteMovie }: MovieListProps) {
                         <h3 className={styles.title}>{movie.title}</h3>
                         <div className={styles.genres}>
                             {movie.genres && movie.genres.length > 0 ? (
-                                movie.genres.map((genre, index) => (
+                                movie.genres.map((genre: any, index: number) => (
                                     <div key={index} className={styles.genreTag}>
-                                        {genre.name || genre}
+                                        {typeof genre === 'string' ? genre : genre.name}
                                     </div>
                                 ))
                             ) : (
@@ -116,7 +113,7 @@ export default function MovieList({ movies, onDeleteMovie }: MovieListProps) {
                             )}
                         </div>
                         <p className={styles.synopsis}>
-                            {movie.synopsis || movie.overview || defaultMovies[index].synopsis}
+                            {movie.synopsis || movie.overview || defaultMovies[0].synopsis}
                         </p>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import styles from './movie.module.css';
 import Card from './card';
-import Image from 'next/image'; //someone forgot a semicolon here :3
+import Image from 'next/image'; 
 import { movieProps } from './types';
 
 

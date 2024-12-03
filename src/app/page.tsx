@@ -1,63 +1,160 @@
-"use client";
+'use client'
 
-import Header from './frontend/components/header';
-import { useState } from 'react';
-import './page.css';
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import NavBar from './frontend/components/NavBar';
 import Splash from './frontend/components/Splash';
 import SearchBar from './frontend/components/SearchBar';
 import MovieList from './frontend/components/MovieList';
 import Footer from './frontend/components/Footer';
-import axios from 'axios';
-
-type movie = {
-    id: number;
-    genre: string;
-    title: string;
-    synopsis: string;
-    imageUrl: string;
-    platform: string;
-};
-
-const MOVIES_INIT: movie[] = [
-    {
-        id: 1,
-        genre: 'action',
-        title: 'Indiana Jones and the Temple of Doom',
-        synopsis: 'In 1935, American archeologist Indiana Jones survives a murder attempt from Shanghai crime boss Lao Che, who hired him to retrieve the remains of Nurhaci. Indy flees from the city accompanied by his young orphan sidekick Short Round and nightclub singer Willie Scott, unaware that the plane they are traveling on is owned by Che....',
-        imageUrl: 'https://upload.wikimedia.org/wikipedia/en/1/10/Indiana_Jones_and_the_Temple_of_Doom_PosterB.jpg',
-        platform: 'Netflix',
-    },
-];
 
 export default function Home() {
+    const { data: session } = useSession();
     const [movies, setMovies] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleMovieSelect = async (movie: movie) => {
-        setMovies((prevMovies) => {
-            const newMovies = [...prevMovies];
-            if (newMovies.length < 3) {
-                newMovies.push(movie);
-            } else {
-                newMovies.shift();
-                newMovies.push(movie);
+    useEffect(() => {
+        let mounted = true;
+        
+        const fetchMovies = async () => {
+            // Clear movies when session changes
+            setMovies([]);
+            
+            if (!session) return;
+            
+            try {
+                const response = await fetch('/api/movies');
+                if (response.ok && mounted) {
+                    const data = await response.json();
+                    setMovies(data);
+                }
+            } catch (error) {
+                console.error('Error fetching movies:', error);
             }
-            return newMovies;
+        };
+
+        fetchMovies();
+        
+        return () => {
+            mounted = false;
+        };
+    }, [session]); 
+
+    // check for duplicates
+    const isDuplicate = (newMovie: any, existingMovies: any[]) => {
+        return existingMovies.some(movie => {
+            // Check by movieId (from TMDB)
+            if (movie.movieId === newMovie.movieId) {
+                return true;
+            }
+            
+            // Check by title (case-insensitive)
+            const sameTitle = movie.title?.toLowerCase() === newMovie.title?.toLowerCase();
+            
+            // If same title, check if it belongs to same user
+            if (sameTitle && movie.userId === newMovie.userId) {
+                return true;
+            }
+            
+            return false;
         });
+    };
+
+    const handleAddMovie = async (movie: any) => {
+        if (!session || isLoading) return;
+
+        const movieData = {
+            userId: session.user?.id,
+            movieId: movie.id,
+            title: movie.title,
+            overview: movie.overview,
+            poster_path: movie.poster_path,
+            genres: movie.genres?.map((g: any) => typeof g === 'string' ? g : g.name) || []
+        };
+
+        // Check for duplicates before saving
+        const isDuplicateMovie = isDuplicate(movieData, movies);
+        if (isDuplicateMovie) {
+            console.log('Movie already exists in your list');
+            return;
+        }
 
         try {
-            await axios.post('/api/saveMovie', movie);
+            setIsLoading(true);
+            const response = await fetch('/api/movies', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(movieData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to save movie');
+            }
+
+            const { movie: savedMovie } = await response.json();
+            
+            // Immediately update the UI with the new movie
+            setMovies(prevMovies => [...prevMovies, savedMovie]);
+
         } catch (error) {
-            console.error('Error saving movie:', error);
+            console.error('Error:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    const handleDeleteMovie = async (movieId: string) => {
+    const handleAddMovieOld = async (movie: any) => {
+        if (!session || isLoading) return;
+
+        const movieData = {
+            userId: session.user?.id,
+            movieId: movie.id,
+            title: movie.title,
+            overview: movie.overview,
+            poster_path: movie.poster_path,
+            genres: movie.genres?.map((g: any) => typeof g === 'string' ? g : g.name) || []
+        };
+
         try {
-            setMovies(prevMovies => prevMovies.filter(movie => movie.id.toString() !== movieId));
+            const checkResponse = await fetch('/api/movies');
+            if (checkResponse.ok) {
+                const currentMovies = await checkResponse.json();
+                if (isDuplicate(movieData, currentMovies)) {
+                    console.log('Movie already exists in your list');
+                    return;
+                }
+            }
+
+            setIsLoading(true);
+
+            const saveResponse = await fetch('/api/movies', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(movieData),
+            });
+
+            if (!saveResponse.ok) {
+                throw new Error('Failed to save movie');
+            }
+
+            const { movie: savedMovie } = await saveResponse.json();
+            
+            // Update movies state with new movie
+            setMovies(prevMovies => [...prevMovies, savedMovie]);
+
         } catch (error) {
-            console.error('Error deleting movie:', error);
+            console.error('Error:', error);
+        } finally {
+            setIsLoading(false);
         }
+    };
+
+    const handleDeleteMovie = (movieId: string) => {
+        setMovies(prevMovies => prevMovies.filter(movie => movie._id !== movieId));
     };
 
     return (
@@ -65,11 +162,10 @@ export default function Home() {
             <div className="content-wrapper">
                 <NavBar />
                 <Splash />
-                <SearchBar onMovieSelect={handleMovieSelect} />
-                <MovieList 
-                    movies={movies} 
-                    onDeleteMovie={handleDeleteMovie}
-                />
+                <div className="px-4">
+                    {session && <SearchBar onMovieSelect={handleAddMovieOld} />}
+                    <MovieList movies={movies} onDeleteMovie={handleDeleteMovie} />
+                </div>
                 <Footer />
             </div>
         </div>
